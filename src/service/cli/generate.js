@@ -25,13 +25,24 @@ function createRandomDate() {
     return moment(randomDate).format('YYYY-MM-DD HH:mm:ss')
 }
 
+function createAnnounce() {
+    return Array(getRandomInt(1, 5)).fill('').map(() => SENTENCES[getRandomInt(0, SENTENCES.length - 1)]).join(` `);
+}
+
+function createFullText() {
+    return Array(getRandomInt(0, SENTENCES.length - 1)).fill('').map(() => SENTENCES[getRandomInt(0, SENTENCES.length - 1)]).join(` `);
+}
+function createCategory() {
+    return Array(getRandomInt(0, CATEGORIES.length - 1)).fill('').map(() => CATEGORIES[getRandomInt(0, CATEGORIES.length - 1)]);
+}
+
 const generateArticles = (count) => (
     Array(count).fill({}).map(() => ({
         title: [TITLES[getRandomInt(0, TITLES.length - 1)]],
         createdDate: createRandomDate(),
-        announce: Array(getRandomInt(0, 5)).fill('').map(() => SENTENCES[getRandomInt(0, SENTENCES.length - 1)]).join(` `),
-        fullText: Array(getRandomInt(0, SENTENCES.length - 1)).fill('').map(() => SENTENCES[getRandomInt(0, SENTENCES.length - 1)]).join(` `),
-        сategory: Array(getRandomInt(0, CATEGORIES.length - 1)).fill('').map(() => CATEGORIES[getRandomInt(0, CATEGORIES.length - 1)]),
+        announce: createAnnounce(),
+        fullText: createFullText(),
+        сategory: createCategory(),
     }))
 );
 
