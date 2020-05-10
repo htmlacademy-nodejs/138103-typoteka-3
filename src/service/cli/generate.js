@@ -36,11 +36,9 @@ module.exports = {
             const content = JSON.stringify(generateArticles(countArticles));
             fs.writeFile(FILE_NAME, content, (err) => {
                 if (err) {
-                    // return console.error(`Can't write data to file...`);
                     process.exit(1);
                 }
                 process.exit();
-                // return console.info(`Operation success. File created.`);
             });
         } else {
             console.info('Вы можете сгенерировать не более 1000 публикаций');
