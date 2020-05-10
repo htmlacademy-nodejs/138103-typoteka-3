@@ -17,10 +17,18 @@ const {
 let moment = require('moment');
 const fs = require(`fs`);
 
+function createRandomDate() {
+    // startDate и endDate в формате timestamp
+    const startDate = moment().subtract(3, 'months').format('x');
+    const endDate = moment().format('x');
+    const randomDate = getRandomInt(startDate, endDate);
+    return moment(randomDate).format('YYYY-MM-DD HH:mm:ss')
+}
+
 const generateArticles = (count) => (
     Array(count).fill({}).map(() => ({
         title: [TITLES[getRandomInt(0, TITLES.length - 1)]],
-        createdDate: moment(getRandomInt(moment().subtract(3, 'months').format('x'), moment().format('x'))).format('YYYY-MM-DD HH:mm:ss'),
+        createdDate: createRandomDate(),
         announce: Array(getRandomInt(0, 5)).fill('').map(() => SENTENCES[getRandomInt(0, SENTENCES.length - 1)]).join(` `),
         fullText: Array(getRandomInt(0, SENTENCES.length - 1)).fill('').map(() => SENTENCES[getRandomInt(0, SENTENCES.length - 1)]).join(` `),
         сategory: Array(getRandomInt(0, CATEGORIES.length - 1)).fill('').map(() => CATEGORIES[getRandomInt(0, CATEGORIES.length - 1)]),
