@@ -1,0 +1,25 @@
+{
+  "name": "138103-typoteka-3",
+  "version": "1.0.0",
+  "description": "Типотека",
+  "main": "./src/service/servise.js",
+  "scripts": {
+    "test": "npm run eslint",
+    "eslint": "eslint --ext .js src/",
+    "start": "node ./src/service/service.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/joi-joe-joy/138103-typoteka-3.git"
+  },
+  "author": "Evgenia Mikheeva",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/joi-joe-joy/138103-typoteka-3/issues"
+  },
+  "homepage": "https://github.com/joi-joe-joy/138103-typoteka-3#readme",
+  "devDependencies": {
+    "eslint": "7.0.0",
+    "eslint-config-htmlacademy": "0.5.2"
+  }
+}
