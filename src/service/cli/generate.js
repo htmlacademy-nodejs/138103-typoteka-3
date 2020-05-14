@@ -15,7 +15,8 @@ const {
 } = require(`../../constants`);
 
 let moment = require('moment');
-const fs = require(`fs`);
+const fs = require(`fs`).promises;
+const chalk = require(`chalk`);
 
 function createRandomDate() {
     // startDate и endDate в формате timestamp
@@ -48,19 +49,21 @@ const generateArticles = (count) => (
 
 module.exports = {
     name: `--generate`,
-    run(args) {
+    async run(args) {
         const [count] = args;
         const countArticles = Number.parseInt(count, 10) || DEFAULT_COUNT;
         if (countArticles <= MAX_PUBLICATIONS) {
             const content = JSON.stringify(generateArticles(countArticles));
-            fs.writeFile(FILE_NAME, content, (err) => {
-                if (err) {
-                    process.exit(1);
-                }
-                process.exit();
-            });
+            try {
+                await fs.writeFile(FILE_NAME, content);
+                console.info(chalk.green(`Operation success. File created.`));
+                process.exit(1);
+            } catch (err) {
+                console.info(chalk.red(`Can't write data to file...`));
+                process.exit(1);
+            }
         } else {
-            console.info('Вы можете сгенерировать не более 1000 публикаций');
+            console.info(chalk.red('Вы можете сгенерировать не более 1000 публикаций'));
         }
     }
 }
