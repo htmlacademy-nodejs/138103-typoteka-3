@@ -9,14 +9,15 @@ const {
     DEFAULT_COUNT,
     FILE_NAME,
     MAX_PUBLICATIONS,
-    TITLES,
-    SENTENCES,
-    CATEGORIES
 } = require(`../../constants`);
 
 let moment = require('moment');
 const fs = require(`fs`).promises;
 const chalk = require(`chalk`);
+
+const FILE_SENTENCES_PATH = `./data/sentences.txt`;
+const FILE_TITLES_PATH = `./data/titles.txt`;
+const FILE_CATEGORIES_PATH = `./data/categories.txt`;
 
 function createRandomDate() {
     // startDate и endDate в формате timestamp
@@ -26,34 +27,48 @@ function createRandomDate() {
     return moment(randomDate).format('YYYY-MM-DD HH:mm:ss')
 }
 
-function createAnnounce() {
-    return Array(getRandomInt(1, 5)).fill('').map(() => SENTENCES[getRandomInt(0, SENTENCES.length - 1)]).join(` `);
+const createAnnounce = (sentences) => {
+    return Array(getRandomInt(1, 5)).fill('').map(() => sentences[getRandomInt(0, sentences.length - 1)]).join(` `);
 }
 
-function createFullText() {
-    return Array(getRandomInt(0, SENTENCES.length - 1)).fill('').map(() => SENTENCES[getRandomInt(0, SENTENCES.length - 1)]).join(` `);
+const createFullText = (sentences) => {
+    return Array(getRandomInt(0, sentences.length - 1)).fill('').map(() => sentences[getRandomInt(0, sentences.length - 1)]).join(` `);
 }
-function createCategory() {
-    return Array(getRandomInt(0, CATEGORIES.length - 1)).fill('').map(() => CATEGORIES[getRandomInt(0, CATEGORIES.length - 1)]);
+const createCategory = (categories) => {
+    return Array(getRandomInt(0, categories.length - 1)).fill('').map(() => categories[getRandomInt(0, categories.length - 1)]);
 }
 
-const generateArticles = (count) => (
+const readContent = async (filePath) => {
+    try {
+        const content = await fs.readFile(filePath, `utf8`);
+        return content.split(`\n`);
+    } catch (err) {
+        console.error(chalk.red(err));
+        return [];
+    }
+}
+
+const generateArticles = (count, titles, sentences, categories) => (
     Array(count).fill({}).map(() => ({
-        title: [TITLES[getRandomInt(0, TITLES.length - 1)]],
+        title: [titles[getRandomInt(0, titles.length - 1)]],
         createdDate: createRandomDate(),
-        announce: createAnnounce(),
-        fullText: createFullText(),
-        сategory: createCategory(),
+        announce: createAnnounce(sentences),
+        fullText: createFullText(sentences),
+        сategory: createCategory(categories),
     }))
 );
 
 module.exports = {
     name: `--generate`,
     async run(args) {
+        const titles = await readContent(FILE_TITLES_PATH);
+        const sentences = await readContent(FILE_SENTENCES_PATH);
+        const categories = await readContent(FILE_CATEGORIES_PATH);
+
         const [count] = args;
         const countArticles = Number.parseInt(count, 10) || DEFAULT_COUNT;
         if (countArticles <= MAX_PUBLICATIONS) {
-            const content = JSON.stringify(generateArticles(countArticles));
+            const content = JSON.stringify(generateArticles(countArticles, titles, sentences, categories));
             try {
                 await fs.writeFile(FILE_NAME, content);
                 console.info(chalk.green(`Operation success. File created.`));
