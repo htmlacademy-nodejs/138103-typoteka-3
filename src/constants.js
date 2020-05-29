@@ -9,7 +9,6 @@ const ExitCode = {
 };
 const FILE_NAME = `mocks.json`;
 const MAX_PUBLICATIONS = 1000;
-const DEFAULT_PORT = 3000;
 
 const HttpCode = {
   OK: 200,
@@ -25,7 +24,6 @@ module.exports = {
   MAX_PUBLICATIONS,
   DEFAULT_COMMAND,
   USER_ARGV_INDEX,
-  DEFAULT_PORT,
   ExitCode,
   HttpCode
 };
