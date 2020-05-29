@@ -1,0 +1,34 @@
+extends layout.pug
+
+block content
+  main.main-page
+    h1.visually-hidden Главная страница личного блога Типотека
+    p.
+      Это приветственный текст, который владелец блога может выбрать, чтобы описать себя 👏
+    include partials/theme-list.pug
+    .main-page__section-flex
+      section.main-page__hot.hot
+        h2.hot__name
+          | Самое обсуждаемое 
+          span.hot__icon.hot__icon--fire
+        ul.hot__list
+          li.hot__list-item
+            a.hot__list-link(href='#')
+              | Билл Гейтс впервые за два года возглавил рейтинг самых богатых людей мира по версии Bloomberg 
+              sup.hot__link-sup 12
+          li.hot__list-item
+            a.hot__list-link(href='#')
+              | Сервис для аналитики Telegram-чатов Combot попал под блокировку из-за информации на служебной 
+              sup.hot__link-sup 15
+              |  странице
+
+          li.hot__list-item.hot__list-item--margin
+            a.hot__list-link(href='#')
+              | Модель Кайли Дженнер продаст 51% своей компании Kylie Cosmetics владельцу Factor за $600 млн 
+              sup.hot__link-sup 52
+          li.hot__list-item.hot__list-item--end
+            a.hot__list-link(href='#')
+              | Tesla получила 146 тысяч предзаказов на электрический пикап Cybertruck за двое суток 
+              sup.hot__link-sup 153
+      include partials/last-comments.pug
+    include partials/preview.pug

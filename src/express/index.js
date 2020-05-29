@@ -1,17 +1,24 @@
 'use strict';
 
 const express = require(`express`);
-
+const path = require(`path`);
 const mainRouter = require(`./routes/main-router`);
 const articlesRouter = require(`./routes/articles-router`);
 const myRouter = require(`./routes/my-router`);
 
 const DEFAULT_PORT = 8080;
+const PUBLIC_DIR = `public`;
+
 const app = express();
 
-app.use(`/`, mainRouter);
 app.use(`/articles`, articlesRouter);
 app.use(`/my`, myRouter);
+app.use(`/`, mainRouter);
+
+app.use(express.static(path.resolve(__dirname, PUBLIC_DIR)));
+
+app.set(`views`, path.resolve(__dirname, `templates`));
+app.set(`view engine`, `pug`);
 
 app.listen(DEFAULT_PORT);
 

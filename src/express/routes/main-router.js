@@ -3,10 +3,10 @@
 const {Router} = require(`express`);
 const mainRouter = new Router();
 
-mainRouter.get(`/`, (req, res) => res.send(`/`)); // главная страница
-mainRouter.get(`/register`, (req, res) => res.send(`/register`)); // регистрация
-mainRouter.get(`/login`, (req, res) => res.send(`/login`)); // вход
-mainRouter.get(`/search`, (req, res) => res.send(`/search`)); // поиск
-mainRouter.get(`/categories`, (req, res) => res.send(`/categories`)); // категории
+mainRouter.get(`/`, (req, res) => res.render(`main`)); // главная страница
+mainRouter.get(`/register`, (req, res) => res.render(`login`)); // регистрация
+mainRouter.get(`/login`, (req, res) => res.render(`sign-up`)); // вход
+mainRouter.get(`/search`, (req, res) => res.render(`search`)); // поиск
+mainRouter.get(`/categories`, (req, res) => res.render(`all-categories`)); // категории
 
 module.exports = mainRouter;
