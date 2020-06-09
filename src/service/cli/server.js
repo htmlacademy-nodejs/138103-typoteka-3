@@ -2,26 +2,19 @@
 
 const chalk = require(`chalk`);
 const express = require(`express`);
-const fs = require(`fs`).promises;
+const routes = require(`../api`);
 
 const {
-  FILE_NAME,
-  HttpCode
+  HttpCode,
+  API_PREFIX
 } = require(`../../constants`);
 
-const DEFAULT_PORT = 3000;
 const app = express();
 app.use(express.json());
 
-app.get(`/articles`, async (req, res) => {
-  try {
-    const fileContent = await fs.readFile(FILE_NAME);
-    const mocks = JSON.parse(fileContent);
-    res.json(mocks);
-  } catch (err) {
-    res.status(HttpCode.INTERNAL_SERVER_ERROR).send(err);
-  }
-});
+const DEFAULT_PORT = 3000;
+
+app.use(API_PREFIX, routes);
 
 app.use((req, res) => res
   .status(HttpCode.NOT_FOUND)
