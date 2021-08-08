@@ -1,7 +1,11 @@
 'use strict';
 
-const {nanoid} = require(`nanoid`);
-const {MAX_ID_LENGTH} = require(`../../constants`);
+const {
+  nanoid
+} = require(`nanoid`);
+const {
+  MAX_ID_LENGTH
+} = require(`../../constants`);
 
 class ArticleService {
   constructor(articles) {
@@ -17,20 +21,24 @@ class ArticleService {
   }
 
   create(article) {
-    const newArticle = Object.assign({id: nanoid(MAX_ID_LENGTH), comments: []}, article);
+    const newArticle = {
+      id: nanoid(MAX_ID_LENGTH),
+      comments: [],
+      ...article
+    };
     this._articles.push(newArticle);
 
     return newArticle;
   }
 
   update(id, article) {
-    let oldArticle = this._articles.find((item) => item.id === id);
-
-    if (!article) {
-      return null;
-    }
-
-    return Object.assign(oldArticle, article);
+    const oldArticleIndex = this._articles.findIndex((item) => item.id === id);
+    const newArticle = {
+      ...this._articles[oldArticleIndex],
+      ...article
+    };
+    this._articles[oldArticleIndex] = newArticle;
+    return newArticle;
   }
 
   drop(id) {

@@ -4,8 +4,8 @@ const DEFAULT_COUNT = 1;
 const DEFAULT_COMMAND = `--generate`;
 const USER_ARGV_INDEX = 2;
 const ExitCode = {
-  success: 0,
-  error: 1
+  SUCCESS: 0,
+  ERROR: 1
 };
 
 const FILE_NAME = `mocks.json`;
@@ -23,6 +23,11 @@ const HttpCode = {
   INTERNAL_SERVER_ERROR: 500,
 };
 
+const Env = {
+  DEVELOPMENT: `development`,
+  PRODUCTION: `production`
+};
+
 module.exports = {
   DEFAULT_COUNT,
   FILE_NAME,
@@ -32,5 +37,6 @@ module.exports = {
   ExitCode,
   HttpCode,
   MAX_ID_LENGTH,
-  API_PREFIX
+  API_PREFIX,
+  Env
 };
