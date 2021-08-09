@@ -1,7 +1,9 @@
 'use strict';
 
 const fields = [`text`];
-const {HttpCode} = require(`../../constants`);
+const {
+  HttpCode
+} = require(`../../constants`);
 
 module.exports = (req, res, next) => {
   const newComment = req.body;
@@ -9,9 +11,9 @@ module.exports = (req, res, next) => {
   const keysExist = fields.every((key) => keys.includes(key));
 
   if (!keysExist) {
-    res.status(HttpCode.BAD_REQUEST)
+    return res.status(HttpCode.BAD_REQUEST)
       .send(`Bad request`);
   }
 
-  next();
+  return next();
 };

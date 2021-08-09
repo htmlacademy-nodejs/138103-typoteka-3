@@ -9,13 +9,24 @@ const {
   DEFAULT_COUNT,
   FILE_NAME,
   MAX_PUBLICATIONS,
-  MAX_ID_LENGTH
+  MAX_ID_LENGTH,
+  ExitCode
 } = require(`../../constants`);
 
 let moment = require(`moment`);
 const fs = require(`fs`).promises;
 const chalk = require(`chalk`);
-const {nanoid} = require(`nanoid`);
+const {
+  nanoid
+} = require(`nanoid`);
+
+const {
+  getLogger
+} = require(`../lib/logger`);
+
+const logger = getLogger({
+  name: `generator`
+});
 
 const FILE_SENTENCES_PATH = `./data/sentences.txt`;
 const FILE_TITLES_PATH = `./data/titles.txt`;
@@ -61,7 +72,7 @@ const readContent = async (filePath) => {
     const content = await fs.readFile(filePath, `utf8`);
     return content.split(`\n`);
   } catch (err) {
-    console.error(chalk.red(err));
+    logger.error(chalk.red(err));
     return [];
   }
 };
@@ -92,14 +103,14 @@ module.exports = {
       const content = JSON.stringify(generateArticles(countArticles, titles, sentences, categories, comments));
       try {
         await fs.writeFile(FILE_NAME, content);
-        console.info(chalk.green(`Operation success. File created.`));
-        process.exit(1);
+        logger.info(chalk.green(`Operation success. File created.`));
+        process.exit(ExitCode.SUCCESS);
       } catch (err) {
-        console.info(chalk.red(`Can't write data to file...`));
-        process.exit(1);
+        logger.error(chalk.red(`Can't write data to file...`));
+        process.exit(ExitCode.ERROR);
       }
     } else {
-      console.info(chalk.red(`Вы можете сгенерировать не более 1000 публикаций`));
+      logger.error(chalk.red(`Вы можете сгенерировать не более 1000 публикаций`));
     }
   }
 };
