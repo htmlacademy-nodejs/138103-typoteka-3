@@ -9,10 +9,9 @@ Thumbs.db
 
 # Вспомогательные файлы
 *.log*
-.prettierrc.js
-.prettierignore
 node_modules/
 ./mocks.json
 
 # Папка с собранными файлами проекта
 build/
+src/express/upload

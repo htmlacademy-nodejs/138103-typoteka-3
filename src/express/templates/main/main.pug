@@ -1,11 +1,11 @@
-extends layout.pug
+extends ../layout.pug
 
 block content
   main.main-page
     h1.visually-hidden Главная страница личного блога Типотека
     p.
       Это приветственный текст, который владелец блога может выбрать, чтобы описать себя 👏
-    include partials/theme-list.pug
+    include ../partials/theme-list.pug
     .main-page__section-flex
       section.main-page__hot.hot
         h2.hot__name
@@ -30,5 +30,9 @@ block content
             a.hot__list-link(href='#')
               | Tesla получила 146 тысяч предзаказов на электрический пикап Cybertruck за двое суток 
               sup.hot__link-sup 153
-      include partials/last-comments.pug
-    include partials/preview.pug
+      include ../partials/last-comments.pug
+    section.main-page__list.preview
+      h2.visually-hidden Список превью статей
+      ul.preview__list
+        each article of articles
+          +preview(article)
