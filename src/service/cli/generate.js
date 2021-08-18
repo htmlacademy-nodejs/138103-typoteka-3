@@ -10,10 +10,10 @@ const {
   FILE_NAME,
   MAX_PUBLICATIONS,
   MAX_ID_LENGTH,
-  ExitCode
+  ExitCode,
 } = require(`../../constants`);
 
-let moment = require(`moment`);
+const moment = require(`moment`);
 const fs = require(`fs`).promises;
 const chalk = require(`chalk`);
 const {
@@ -40,7 +40,7 @@ function createRandomDate() {
   const startDate = moment().subtract(3, `months`).format(`x`);
   const endDate = moment().format(`x`);
   const randomDate = getRandomInt(startDate, endDate);
-  return moment(randomDate).format(`YYYY-MM-DD HH:mm:ss`);
+  return moment(randomDate).format(`DD.MM.YYYY`);
 }
 
 const createAnnounce = (sentences) => {
@@ -85,7 +85,8 @@ const generateArticles = (count, titles, sentences, categories, comments) => (
     announce: createAnnounce(sentences),
     fullText: createFullText(sentences),
     сategory: createCategory(categories),
-    comments: createComments(comments)
+    comments: createComments(comments),
+    picture: `forest`,
   }))
 );
 

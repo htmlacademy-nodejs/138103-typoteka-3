@@ -98,7 +98,8 @@ const createAPI = () => {
   return app;
 };
 
-describe(`API returns a list of all articles`, () => {
+
+describe(`GET: API returns a list of all articles`, () => {
   let response;
 
   beforeAll(async () => {
@@ -112,7 +113,7 @@ describe(`API returns a list of all articles`, () => {
   test(`First article's id equals "IHSWOd"`, () => expect(response.body[0].id).toBe(`IHSWOd`));
 });
 
-describe(`API returns an article with given id`, () => {
+describe(`GET:API returns an article with given id`, () => {
   let response;
 
   beforeAll(async () => {
@@ -126,7 +127,7 @@ describe(`API returns an article with given id`, () => {
     expect(response.body.title).toBe(`Спортивный туризм - это легко`));
 });
 
-describe(`API creates an article if data is valid`, () => {
+describe(`POST: API creates an article if data is valid`, () => {
   let app;
   let response;
 
@@ -141,11 +142,12 @@ describe(`API creates an article if data is valid`, () => {
   test(`Returns article created`, () => expect(response.body).toEqual(expect.objectContaining(newArticle)));
   test(`Article count is changed`, () => request(app)
     .get(`/articles`)
+    // eslint-disable-next-line max-nested-callbacks
     .expect((res) => expect(res.body.length).toBe(6))
   );
 });
 
-describe(`API refuses to create an article if data is invalid`, () => {
+describe(`POST: API refuses to create an article if data is invalid`, () => {
   let app;
 
   beforeAll(async () => {
@@ -172,7 +174,7 @@ describe(`API refuses to create an article if data is invalid`, () => {
   );
 });
 
-describe(`API changes existent article`, () => {
+describe(`PUT: API changes existent article`, () => {
   let app;
   let response;
 
@@ -191,7 +193,7 @@ describe(`API changes existent article`, () => {
     .expect((res) => expect(res.body).toEqual(expect.objectContaining(newArticle))));
 });
 
-test(`API returns status code 404 when trying to change non-existent article`, () => {
+test(`PUT: API returns status code 404 when trying to change non-existent article`, () => {
   const app = createAPI();
 
   const validArticle = {
@@ -208,7 +210,7 @@ test(`API returns status code 404 when trying to change non-existent article`, (
     .expect(HttpCode.NOT_FOUND);
 });
 
-test(`API returns status code 400 when trying to change an article with invalid data`, () => {
+test(`PUT: API returns status code 400 when trying to change an article with invalid data`, () => {
   const app = createAPI();
 
   const invalidArticle = {
@@ -224,7 +226,7 @@ test(`API returns status code 400 when trying to change an article with invalid 
     .expect(HttpCode.BAD_REQUEST);
 });
 
-describe(`API correctly deletes an article`, () => {
+describe(`DELETE: API correctly deletes an article`, () => {
   let app;
   let response;
 
@@ -242,7 +244,7 @@ describe(`API correctly deletes an article`, () => {
   );
 });
 
-test(`API refuses to delete non-existent article`, () => {
+test(`DELETE: API refuses to delete non-existent article`, () => {
   const app = createAPI();
 
   return request(app)
@@ -250,7 +252,7 @@ test(`API refuses to delete non-existent article`, () => {
     .expect(HttpCode.NOT_FOUND);
 });
 
-describe(`API returns a list of all comments by articleId = KAg6HN`, () => {
+describe(`GET COMMENTS: API returns a list of all comments by articleId = KAg6HN`, () => {
   let response;
 
   beforeAll(async () => {
@@ -264,7 +266,7 @@ describe(`API returns a list of all comments by articleId = KAg6HN`, () => {
   test(`First comments's id equals "X5tSqY"`, () => expect(response.body[0].id).toBe(`X5tSqY`));
 });
 
-describe(`API creates a comment if data is valid`, () => {
+describe(`POST COMMENTS: API creates a comment if data is valid`, () => {
   let app;
   let response;
 
@@ -287,7 +289,7 @@ describe(`API creates a comment if data is valid`, () => {
   );
 });
 
-test(`API refuses to create a comment to non-existent article and returns status code 404`, () => {
+test(`POST COMMENTS: API refuses to create a comment to non-existent article and returns status code 404`, () => {
   const app = createAPI();
 
   return request(app)
@@ -298,7 +300,7 @@ test(`API refuses to create a comment to non-existent article and returns status
     .expect(HttpCode.NOT_FOUND);
 });
 
-describe(`API correctly deletes a comment`, () => {
+describe(`DELETE COMMENTS: API correctly deletes a comment`, () => {
   let app;
   let response;
 
@@ -316,7 +318,7 @@ describe(`API correctly deletes a comment`, () => {
   );
 });
 
-test(`API refuses to delete non-existent comment`, () => {
+test(`DELETE COMMENTS: API refuses to delete non-existent comment`, () => {
   const app = createAPI();
 
   return request(app)
